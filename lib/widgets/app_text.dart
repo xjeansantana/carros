@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppText extends StatelessWidget {
   String label;
   String hint;
-  bool password = false;
+  bool password;
   TextEditingController controller;
   FormFieldValidator<String> validator;
   TextInputType keyboardType;
@@ -42,9 +42,7 @@ class AppText extends StatelessWidget {
         color: Colors.blue,
       ),
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(16)
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
         labelText: label,
         labelStyle: TextStyle(
           fontSize: 25,
