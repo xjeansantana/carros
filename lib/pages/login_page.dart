@@ -1,3 +1,9 @@
+import 'package:carros/pages/api_response.dart';
+import 'package:carros/pages/home_page.dart';
+import 'package:carros/pages/login_api.dart';
+import 'package:carros/pages/usuario.dart';
+import 'package:carros/utils/alert.dart';
+import 'package:carros/utils/nav.dart';
 import 'package:carros/widgets/app_button.dart';
 import 'package:carros/widgets/app_text.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +16,13 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final _tLogin = TextEditingController(text: "ricardo");
+  final _tLogin = TextEditingController(text: "admin");
 
   final _tSenha = TextEditingController(text: "123");
 
   final _focusSenha = FocusNode();
+
+  bool _showProgress = false;
 
   @override
   void initState() {
@@ -32,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _body() {
+
     return Form(
       key: _formKey,
       child: Container(
@@ -54,16 +63,18 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: 20,
             ),
-            AppButton("Login",
-            onPressed: _onClickLogin,),
+            AppButton(
+              "Login",
+              onPressed: _onClickLogin,
+              showProgress: _showProgress,
+            ),
           ],
         ),
       ),
     );
   }
 
-
-  void _onClickLogin() {
+  void _onClickLogin() async {
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -72,6 +83,23 @@ class _LoginPageState extends State<LoginPage> {
     String senha = _tSenha.text;
 
     print("Login: $login, Senha: $senha");
+
+    setState(() {
+      _showProgress = true;
+    });
+
+    ApiResponse response = await LoginApi.login(login, senha);
+    if (response.ok) {
+      Usuario user = response.result;
+      print(">>> $user");
+
+      push(context, HomePage(), replace: true);
+    } else {
+      alert(context, response.msg);
+    }
+    setState(() {
+      _showProgress = false;
+    });
   }
 
   String _validateLogin(String text) {
