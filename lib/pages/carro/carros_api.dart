@@ -11,8 +11,15 @@ class CarrosApi {
 
     String json = response.body;
 
-    List mapResponse = convert.json.decode(json);
+    List list = convert.json.decode(json);
 
-    return [];
+    final carros = List<Carro>();
+
+    for (Map map in list) {
+      Carro carro = Carro.fromJson(map);
+      carros.add(carro);
+    }
+
+    return carros;
   }
 }
