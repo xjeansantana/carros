@@ -13,11 +13,10 @@ class LoginApi {
 
       Map params = {"username": login, "password": senha};
 
-      String s = json.encode(params);
-      print(url);
-      print(">> $s");
+      String paramsToString = json.encode(params);
 
-      var response = await http.post(url, body: s, headers: headers);
+      var response =
+          await http.post(url, body: paramsToString, headers: headers);
 
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
@@ -27,6 +26,10 @@ class LoginApi {
       if (response.statusCode == 200) {
         final user = Usuario.fromJson(mapResponse);
 
+        user.save();
+
+        Usuario user2 = await Usuario.get();
+        print("user 2: $user2");
 
         return ApiResponse.ok(result: user);
       }

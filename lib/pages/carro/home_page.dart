@@ -20,7 +20,6 @@ class _HomePageState extends State<HomePage>
     super.initState();
 
     _initTabs();
-
   }
 
   Future _initTabs() async {
