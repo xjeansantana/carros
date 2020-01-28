@@ -28,9 +28,6 @@ class LoginApi {
 
         user.save();
 
-        Usuario user2 = await Usuario.get();
-        print("user 2: $user2");
-
         return ApiResponse.ok(result: user);
       }
 
