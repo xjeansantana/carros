@@ -1,3 +1,5 @@
+import 'package:carros/pages/carro/carro_page.dart';
+import 'package:carros/utils/nav.dart';
 import 'package:flutter/material.dart';
 
 import 'carro.dart';
@@ -12,9 +14,11 @@ class CarrosListView extends StatefulWidget {
   _CarrosListViewState createState() => _CarrosListViewState();
 }
 
-class _CarrosListViewState extends State<CarrosListView> with AutomaticKeepAliveClientMixin<CarrosListView>{
+class _CarrosListViewState extends State<CarrosListView>
+    with AutomaticKeepAliveClientMixin<CarrosListView> {
   @override
   bool get wantKeepAlive => true;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -58,7 +62,7 @@ class _CarrosListViewState extends State<CarrosListView> with AutomaticKeepAlive
       child: ListView.builder(
         itemCount: carros != null ? carros.length : 0,
         itemBuilder: (context, index) {
-          Carro carro = carros[index];
+          Carro c = carros[index];
 
           return Card(
             color: Colors.grey[100],
@@ -69,12 +73,12 @@ class _CarrosListViewState extends State<CarrosListView> with AutomaticKeepAlive
                 children: <Widget>[
                   Center(
                     child: Image.network(
-                      carro.urlFoto,
+                      c.urlFoto,
                       width: 250,
                     ),
                   ),
                   Text(
-                    carro.nome,
+                    c.nome,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -91,9 +95,7 @@ class _CarrosListViewState extends State<CarrosListView> with AutomaticKeepAlive
                     children: <Widget>[
                       FlatButton(
                         child: const Text('DETALHES'),
-                        onPressed: () {
-                          /* ... */
-                        },
+                        onPressed: () => _onClickCarro(c),
                       ),
                       FlatButton(
                         child: const Text('SHARE'),
@@ -110,5 +112,9 @@ class _CarrosListViewState extends State<CarrosListView> with AutomaticKeepAlive
         },
       ),
     );
+  }
+
+  _onClickCarro(Carro c) {
+    push(context, CarroPage(c));
   }
 }
