@@ -4,16 +4,6 @@ import 'package:carros/utils/nav.dart';
 import 'package:flutter/material.dart';
 
 class DrawerList extends StatelessWidget {
-  UserAccountsDrawerHeader _header(Usuario user) {
-    return UserAccountsDrawerHeader(
-      accountName: Text(user.nome),
-      accountEmail: Text(user.email),
-      currentAccountPicture: CircleAvatar(
-        backgroundImage: NetworkImage(user.urlFoto),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     Future<Usuario> future = Usuario.get();
@@ -24,7 +14,7 @@ class DrawerList extends StatelessWidget {
           children: <Widget>[
             FutureBuilder<Usuario>(
               future: future,
-              builder: (context, snapshot) {
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
                 Usuario user = snapshot.data;
                 return user != null ? _header(user) : Container();
               },
@@ -32,7 +22,7 @@ class DrawerList extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.star),
               title: Text("Favoritos"),
-              subtitle: Text("mais informações..."),
+              subtitle: Text("Mais informações..."),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
                 print("Item 1");
@@ -42,10 +32,10 @@ class DrawerList extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.help),
               title: Text("Ajuda"),
-              subtitle: Text("mais informações..."),
+              subtitle: Text("Mais informações..."),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
-                print("Item 1");
+                print("Item 2");
                 Navigator.pop(context);
               },
             ),
@@ -53,15 +43,26 @@ class DrawerList extends StatelessWidget {
               leading: Icon(Icons.exit_to_app),
               title: Text("Logout"),
               trailing: Icon(Icons.arrow_forward),
-              onTap: () => _onClickLogout(context),
-            )
+              onTap: () => _onCLickLogout(context),
+            ),
           ],
         ),
       ),
     );
   }
 
-  _onClickLogout(BuildContext context) {
+  UserAccountsDrawerHeader _header(Usuario user) {
+    return UserAccountsDrawerHeader(
+      accountName: Text(user.nome),
+      accountEmail: Text(user.email),
+      currentAccountPicture: CircleAvatar(
+        backgroundImage: NetworkImage(user.urlFoto),
+      ),
+    );
+  }
+
+  _onCLickLogout(BuildContext context) {
+    Usuario.clear();
     Navigator.pop(context);
     push(context, LoginPage(), replace: true);
   }

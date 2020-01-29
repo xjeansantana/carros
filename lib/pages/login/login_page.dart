@@ -16,9 +16,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final _tLogin = TextEditingController(text: "admin");
+  final _tLogin = TextEditingController();
 
-  final _tSenha = TextEditingController(text: "123");
+  final _tSenha = TextEditingController();
 
   final _focusSenha = FocusNode();
 
@@ -27,12 +27,20 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+
+    Future<Usuario> future = Usuario.get();
+    future.then((Usuario user) {
+      if (user != null) {
+        push(context, HomePage(), replace: true);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("Carros"),
       ),
       body: _body(),
@@ -40,7 +48,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _body() {
-
     return Form(
       key: _formKey,
       child: Container(
@@ -89,13 +96,13 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     ApiResponse response = await LoginApi.login(login, senha);
-    if (response.ok) {
+    if (response.success) {
       Usuario user = response.result;
       print(">>> $user");
 
       push(context, HomePage(), replace: true);
     } else {
-      alert(context, response.msg);
+      alert(context, response.message);
     }
     setState(() {
       _showProgress = false;

@@ -28,14 +28,13 @@ class LoginApi {
 
         user.save();
 
-        return ApiResponse.ok(result: user);
+        return ApiResponse.success(user);
       }
 
-      return ApiResponse.error(msg: mapResponse["error"]);
+      return ApiResponse.error(mapResponse["error"]);
     } catch (error, exception) {
       print("Erro no login $error > $exception");
-
-      return ApiResponse.error(msg: "Não foi possível fazer o login.");
+      return ApiResponse.error("Não foi possível fazer o login.");
     }
   }
 }
