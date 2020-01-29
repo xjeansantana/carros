@@ -16,44 +16,37 @@ class CarrosListView extends StatefulWidget {
 
 class _CarrosListViewState extends State<CarrosListView>
     with AutomaticKeepAliveClientMixin<CarrosListView> {
+  List<Carro> carros;
+
   @override
   bool get wantKeepAlive => true;
 
   @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return _body();
+  void initState() {
+    super.initState();
+
+    _loadData();
   }
 
-  _body() {
-    Future<List<Carro>> future = CarrosApi.getCarros(widget.tipo);
+  _loadData() async {
+    List<Carro> carros = await CarrosApi.getCarros(widget.tipo);
 
-    return FutureBuilder(
-      future: future,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) {
-          print(snapshot.error);
-          return Center(
-            child: Text(
-              "Não foi possível listar os carros",
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 22,
-              ),
-            ),
-          );
-        }
+    setState(() {
+      this.carros = carros;
+    });
+  }
 
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
 
-        List<Carro> carros = snapshot.data;
-        return _listView(carros);
-      },
-    );
+    if (carros == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    return _listView(carros);
   }
 
   Container _listView(List<Carro> carros) {
@@ -62,7 +55,7 @@ class _CarrosListViewState extends State<CarrosListView>
       child: ListView.builder(
         itemCount: carros != null ? carros.length : 0,
         itemBuilder: (context, index) {
-          Carro c = carros[index];
+          Carro carro = carros[index];
 
           return Card(
             color: Colors.grey[100],
@@ -73,12 +66,12 @@ class _CarrosListViewState extends State<CarrosListView>
                 children: <Widget>[
                   Center(
                     child: Image.network(
-                      c.urlFoto,
+                      carro.urlFoto,
                       width: 250,
                     ),
                   ),
                   Text(
-                    c.nome,
+                    carro.nome,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -95,7 +88,7 @@ class _CarrosListViewState extends State<CarrosListView>
                     children: <Widget>[
                       FlatButton(
                         child: const Text('DETALHES'),
-                        onPressed: () => _onClickCarro(c),
+                        onPressed: () => _onClickCarro(carro),
                       ),
                       FlatButton(
                         child: const Text('SHARE'),
@@ -114,7 +107,7 @@ class _CarrosListViewState extends State<CarrosListView>
     );
   }
 
-  _onClickCarro(Carro c) {
-    push(context, CarroPage(c));
+  _onClickCarro(Carro carro) {
+    push(context, CarroPage(carro));
   }
 }
