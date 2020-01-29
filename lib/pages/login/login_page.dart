@@ -26,8 +26,6 @@ class _LoginPageState extends State<LoginPage> {
 
   final _focusSenha = FocusNode();
 
-
-
   @override
   void initState() {
     super.initState();
@@ -75,16 +73,15 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
             StreamBuilder<bool>(
-              stream: _streamController.stream,
-              initialData: false,
-              builder: (context, snapshot) {
-                return AppButton(
-                  "Login",
-                  onPressed: _onClickLogin,
-                  showProgress: snapshot.data,
-                );
-              }
-            ),
+                stream: _streamController.stream,
+                initialData: false,
+                builder: (context, snapshot) {
+                  return AppButton(
+                    "Login",
+                    onPressed: _onClickLogin,
+                    showProgress: snapshot.data,
+                  );
+                }),
           ],
         ),
       ),
@@ -114,7 +111,6 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     _streamController.add(false);
-
   }
 
   String _validateLogin(String text) {
@@ -137,5 +133,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
     super.dispose();
+    _streamController.close();
   }
 }

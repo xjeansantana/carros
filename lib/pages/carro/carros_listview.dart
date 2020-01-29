@@ -32,7 +32,7 @@ class _CarrosListViewState extends State<CarrosListView>
     _loadCarros();
   }
 
-   _loadCarros() async {
+  _loadCarros() async {
     List<Carro> carros = await CarrosApi.getCarros(widget.tipo);
 
     _streamController.add(carros);
@@ -130,5 +130,10 @@ class _CarrosListViewState extends State<CarrosListView>
 
   _onClickCarro(Carro carro) {
     push(context, CarroPage(carro));
+  }
+
+  void dispose() {
+    super.dispose();
+    _streamController.close();
   }
 }
