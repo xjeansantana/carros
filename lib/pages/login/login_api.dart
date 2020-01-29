@@ -9,7 +9,9 @@ class LoginApi {
     try {
       var url = 'https://carros-springboot.herokuapp.com/api/v2/login';
 
-      Map<String, String> headers = {"Content-Type": "application/json"};
+      Map<String, String> headers = {
+        "Content-Type": "application/json"
+      };
 
       Map params = {"username": login, "password": senha};
 
