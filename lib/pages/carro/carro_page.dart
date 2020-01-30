@@ -1,18 +1,32 @@
 import 'package:carros/pages/carro/carro.dart';
+import 'package:carros/pages/carro/loripsum_api.dart';
 import 'package:carros/widgets/text.dart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CarroPage extends StatelessWidget {
+class CarroPage extends StatefulWidget {
   Carro carro;
 
   CarroPage(this.carro);
 
   @override
+  _CarroPageState createState() => _CarroPageState();
+}
+
+class _CarroPageState extends State<CarroPage> {
+  final _loripsumApiBloc = LoripsumBloc();
+
+  @override
+  void initState() {
+    super.initState();
+    _loripsumApiBloc.fetch();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(carro.nome),
+          title: Text(widget.carro.nome),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.place),
@@ -51,7 +65,7 @@ class CarroPage extends StatelessWidget {
       padding: EdgeInsets.all(16),
       child: ListView(
         children: <Widget>[
-          Image.network(carro.urlFoto),
+          Image.network(widget.carro.urlFoto),
           _bloco1(),
           Divider(),
           _bloco2()
@@ -68,12 +82,12 @@ class CarroPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             text(
-              carro.nome,
+              widget.carro.nome,
               fontSize: 20,
               bold: true,
             ),
             text(
-              carro.tipo,
+              widget.carro.tipo,
               fontSize: 16,
             ),
           ],
@@ -109,17 +123,23 @@ class CarroPage extends StatelessWidget {
           height: 20,
         ),
         text(
-          carro.descricao,
+          widget.carro.descricao,
           fontSize: 16,
           bold: true,
         ),
         SizedBox(
           height: 20,
         ),
-        text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-          fontSize: 16,
-        ),
+        StreamBuilder<String>(
+            stream: _loripsumApiBloc.stream,
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return text(snapshot.data, fontSize: 16);
+            }),
       ],
     );
   }
@@ -145,4 +165,10 @@ class CarroPage extends StatelessWidget {
   void _cnClickFavorito() {}
 
   void _cnClickShare() {}
+
+  @override
+  void dispose() {
+    super.dispose();
+    _loripsumApiBloc.dispose();
+  }
 }
