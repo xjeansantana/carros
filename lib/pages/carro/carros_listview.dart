@@ -52,7 +52,11 @@ class _CarrosListViewState extends State<CarrosListView>
         }
 
         List<Carro> carros = snapshot.data;
-        return _listView(carros);
+
+        return RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: _listView(carros),
+        );
       },
     );
   }
@@ -119,8 +123,15 @@ class _CarrosListViewState extends State<CarrosListView>
     push(context, CarroPage(carro));
   }
 
+
+  Future<void> _onRefresh() {
+    return _bloc.fetch(tipo);
+  }
+
   void dispose() {
     super.dispose();
     _bloc.dispose();
   }
+
+
 }
