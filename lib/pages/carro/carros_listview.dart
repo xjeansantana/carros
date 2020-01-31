@@ -1,15 +1,10 @@
 import 'package:carros/pages/carro/carro_page.dart';
-
 import 'package:carros/utils/nav.dart';
-
 import 'package:flutter/material.dart';
-
 import 'carro.dart';
 
 class CarrosListView extends StatelessWidget {
-
   List<Carro> carros;
-
 
   CarrosListView(this.carros);
 
@@ -18,9 +13,9 @@ class CarrosListView extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(16),
       child: ListView.builder(
-        itemCount: carros != null ? carros.length : 0,
+        itemCount: carros.length,
         itemBuilder: (context, index) {
-          Carro carro = carros[index];
+          Carro c = carros[index];
 
           return Card(
             color: Colors.grey[100],
@@ -31,29 +26,26 @@ class CarrosListView extends StatelessWidget {
                 children: <Widget>[
                   Center(
                     child: Image.network(
-                      carro.urlFoto,
+                      c.urlFoto ??
+                          "http://www.livroandroid.com.br/livro/carros/esportivos/Ferrari_FF.png",
                       width: 250,
                     ),
                   ),
                   Text(
-                    carro.nome,
+                    c.nome,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 25,
-                    ),
+                    style: TextStyle(fontSize: 25),
                   ),
                   Text(
                     "descrição...",
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(fontSize: 16),
                   ),
                   ButtonBar(
                     children: <Widget>[
                       FlatButton(
                         child: const Text('DETALHES'),
-                        onPressed: () => _onClickCarro(context, carro),
+                        onPressed: () => _onClickCarro(context, c),
                       ),
                       FlatButton(
                         child: const Text('SHARE'),

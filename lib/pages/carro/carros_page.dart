@@ -2,7 +2,6 @@ import 'package:carros/pages/carro/carros_bloc.dart';
 import 'package:carros/pages/carro/carros_listview.dart';
 import 'package:carros/widgets/text_error.dart';
 import 'package:flutter/material.dart';
-
 import 'carro.dart';
 
 class CarrosPage extends StatefulWidget {
@@ -38,10 +37,9 @@ class _CarrosPageState extends State<CarrosPage>
 
     return StreamBuilder(
       stream: _bloc.stream,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
+      builder: (context, snapshot) {
         if (snapshot.hasError) {
-          print(snapshot.error);
-          return TextError("Não foi possívek buscar os carros");
+          return TextError("Não foi possível buscar os carros");
         }
 
         if (!snapshot.hasData) {
@@ -52,13 +50,22 @@ class _CarrosPageState extends State<CarrosPage>
 
         List<Carro> carros = snapshot.data;
 
-        return CarrosListView(carros);
+        return RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: CarrosListView(carros),
+        );
       },
     );
   }
 
+  Future<void> _onRefresh() {
+    return _bloc.fetch(tipo);
+  }
+
+  @override
   void dispose() {
     super.dispose();
+
     _bloc.dispose();
   }
 }

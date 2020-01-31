@@ -16,19 +16,18 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _initTabs();
   }
 
-  Future _initTabs() async {
+  _initTabs() async {
+
     _tabController = TabController(length: 3, vsync: this);
 
     _tabController.index = await Prefs.getInt("tabIdx");
 
-    _tabController.addListener(() {
-      print("Tab ${_tabController.index}");
+    _tabController.addListener((){
 
       Prefs.setInt("tabIdx", _tabController.index);
     });
@@ -42,9 +41,15 @@ class _HomePageState extends State<HomePage>
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(text: "Clássicos"),
-            Tab(text: "Espotivos"),
-            Tab(text: "Luxo"),
+            Tab(
+              text: "Clássicos",
+            ),
+            Tab(
+              text: "Esportivos",
+            ),
+            Tab(
+              text: "Luxo",
+            )
           ],
         ),
       ),
