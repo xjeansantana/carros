@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:carros/pages/carro/carro.dart';
-import 'package:carros/pages/favoritos/base_dao.dart';
+import 'package:carros/utils/sql/base_dao.dart';
+
 
 
 // Data Access Object

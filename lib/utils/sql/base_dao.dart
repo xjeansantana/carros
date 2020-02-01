@@ -1,6 +1,6 @@
 // Data Access Object
-import 'package:carros/pages/favoritos/db_helper.dart.dart';
-import 'package:carros/pages/favoritos/entity.dart';
+import 'package:carros/utils/sql/db_helper.dart.dart';
+import 'package:carros/utils/sql/entity.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 

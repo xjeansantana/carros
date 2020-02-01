@@ -5,7 +5,7 @@ import 'package:carros/utils/nav.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'favoritos/db_helper.dart.dart';
+import '../utils/sql/db_helper.dart.dart';
 
 
 class SplashPage extends StatefulWidget {

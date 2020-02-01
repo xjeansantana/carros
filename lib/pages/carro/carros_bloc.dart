@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:carros/pages/carro/carro.dart';
 import 'package:carros/pages/carro/carros_api.dart';
-import 'package:carros/pages/favoritos/carro_dao.dart.dart';
+import 'package:carros/pages/carro/carro_dao.dart.dart';
 import 'package:carros/utils/network.dart';
 import 'package:carros/utils/simple_bloc.dart';
 
