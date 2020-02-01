@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carros/pages/api_response.dart';
 import 'package:carros/pages/carro/carro.dart';
+import 'package:carros/pages/carro/carros_api.dart';
+import 'package:carros/utils/alert.dart';
 import 'package:carros/widgets/app_button.dart';
 import 'package:carros/widgets/app_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -105,7 +108,7 @@ class _CarroFormPageState extends State<CarroFormPage> {
             "Salvar",
             onPressed: _onClickSalvar,
             showProgress: _showProgress,
-          ),
+          )
         ],
       ),
     );
@@ -114,12 +117,12 @@ class _CarroFormPageState extends State<CarroFormPage> {
   _headerFoto() {
     return carro != null
         ? CachedNetworkImage(
-            imageUrl: carro.urlFoto,
-          )
+      imageUrl: carro.urlFoto,
+    )
         : Image.asset(
-            "assets/images/camera.png",
-            height: 150,
-          );
+      "assets/images/camera.png",
+      height: 150,
+    );
   }
 
   _radioTipo() {
@@ -204,7 +207,15 @@ class _CarroFormPageState extends State<CarroFormPage> {
 
     print("Salvar o carro $c");
 
-    await Future.delayed(Duration(seconds: 3));
+    ApiResponse<bool> response = await CarrosApi.save(c);
+
+    if(response.ok) {
+      alert(context, "Carro salvo com sucesso", callback: (){
+
+      });
+    } else {
+      alert(context, response.msg);
+    }
 
     setState(() {
       _showProgress = false;

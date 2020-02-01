@@ -100,13 +100,13 @@ class _LoginPageState extends State<LoginPage> {
 
 
     ApiResponse response = await _bloc.login(login, senha);
-    if (response.success) {
+    if (response.ok) {
       Usuario user = response.result;
       print(">>> $user");
 
       push(context, HomePage(), replace: true);
     } else {
-      alert(context, response.message);
+      alert(context, response.msg);
     }
 
   }

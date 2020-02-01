@@ -30,7 +30,7 @@ class LoginApi {
 
         user.save();
 
-        return ApiResponse.success(user);
+        return ApiResponse.ok(user);
       }
 
       return ApiResponse.error(mapResponse["error"]);

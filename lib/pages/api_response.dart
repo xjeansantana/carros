@@ -1,13 +1,13 @@
 class ApiResponse<T> {
-  bool success;
-  String message;
+  bool ok;
+  String msg;
   T result;
 
-  ApiResponse.success(this.result) {
-    success = true;
+  ApiResponse.ok(this.result) {
+    ok = true;
   }
 
-  ApiResponse.error(this.message) {
-    success = false;
+  ApiResponse.error(this.msg) {
+    ok = false;
   }
 }
