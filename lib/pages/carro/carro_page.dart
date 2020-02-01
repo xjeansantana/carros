@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CarroPage extends StatefulWidget {
-
   Carro carro;
 
   CarroPage(this.carro);
@@ -17,6 +16,8 @@ class CarroPage extends StatefulWidget {
 
 class _CarroPageState extends State<CarroPage> {
   final _loripsumApiBloc = LoripsumBloc();
+
+  Carro get carro => widget.carro;
 
   @override
   void initState() {
@@ -117,17 +118,23 @@ class _CarroPageState extends State<CarroPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 20,),
-        text(widget.carro.descricao,fontSize: 16,bold: true),
-        SizedBox(height: 20,),
+        SizedBox(
+          height: 20,
+        ),
+        text(widget.carro.descricao, fontSize: 16, bold: true),
+        SizedBox(
+          height: 20,
+        ),
         StreamBuilder<String>(
           stream: _loripsumApiBloc.stream,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if(!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator(),);
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
 
-            return text(snapshot.data,fontSize: 16);
+            return text(snapshot.data, fontSize: 16);
           },
         ),
       ],
@@ -152,7 +159,9 @@ class _CarroPageState extends State<CarroPage> {
     }
   }
 
-  void _onClickFavorito() {}
+  void _onClickFavorito() async {
+
+  }
 
   void _onClickShare() {}
 
