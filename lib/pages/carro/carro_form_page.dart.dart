@@ -117,12 +117,12 @@ class _CarroFormPageState extends State<CarroFormPage> {
   _headerFoto() {
     return carro != null
         ? CachedNetworkImage(
-      imageUrl: carro.urlFoto,
-    )
+            imageUrl: carro.urlFoto,
+          )
         : Image.asset(
-      "assets/images/camera.png",
-      height: 150,
-    );
+            "assets/images/camera.png",
+            height: 150,
+          );
   }
 
   _radioTipo() {
@@ -209,9 +209,9 @@ class _CarroFormPageState extends State<CarroFormPage> {
 
     ApiResponse<bool> response = await CarrosApi.save(c);
 
-    if(response.ok) {
-      alert(context, "Carro salvo com sucesso", callback: (){
-
+    if (response.ok) {
+      alert(context, "Carro salvo com sucesso", callback: () {
+        Navigator.pop(context);
       });
     } else {
       alert(context, response.msg);
