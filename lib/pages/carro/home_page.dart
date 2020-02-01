@@ -1,6 +1,7 @@
 import 'package:carros/drawer_list.dart.dart';
 import 'package:carros/pages/carro/carros_page.dart';
 import 'package:carros/pages/favoritos/favoritos_page.dart';
+import 'package:carros/utils/alert.dart';
 import 'package:carros/utils/prefs.dart.dart';
 import 'package:flutter/material.dart';
 
@@ -23,13 +24,11 @@ class _HomePageState extends State<HomePage>
   }
 
   _initTabs() async {
-
     _tabController = TabController(length: 4, vsync: this);
 
     _tabController.index = await Prefs.getInt("tabIdx");
 
-    _tabController.addListener((){
-
+    _tabController.addListener(() {
       Prefs.setInt("tabIdx", _tabController.index);
     });
   }
@@ -71,6 +70,14 @@ class _HomePageState extends State<HomePage>
         ],
       ),
       drawer: DrawerList(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: _onClickAdicionarCarro,
+      ),
     );
+  }
+
+  void _onClickAdicionarCarro() {
+    alert(context, "Adicionar Carro");
   }
 }
