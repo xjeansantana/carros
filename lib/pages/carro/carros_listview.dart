@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carros/pages/carro/carro_page.dart';
 import 'package:carros/utils/nav.dart';
 import 'package:flutter/material.dart';
+
 import 'carro.dart';
 
 class CarrosListView extends StatelessWidget {
@@ -27,8 +28,7 @@ class CarrosListView extends StatelessWidget {
                 children: <Widget>[
                   Center(
                     child: CachedNetworkImage(
-                      imageUrl:
-                      c.urlFoto ??
+                      imageUrl: c.urlFoto ??
                           "http://www.livroandroid.com.br/livro/carros/esportivos/Ferrari_FF.png",
                       width: 250,
                     ),
@@ -66,10 +66,7 @@ class CarrosListView extends StatelessWidget {
     );
   }
 
-  _onClickCarro(context, Carro carro) {
-    push(context, CarroPage(carro));
+  _onClickCarro(context, Carro c) {
+    push(context, CarroPage(c));
   }
-
-
-
 }

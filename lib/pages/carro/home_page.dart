@@ -1,5 +1,6 @@
 import 'package:carros/drawer_list.dart.dart';
 import 'package:carros/pages/carro/carros_page.dart';
+import 'package:carros/pages/favoritos/favoritos_page.dart';
 import 'package:carros/utils/prefs.dart.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage>
 
   _initTabs() async {
 
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
 
     _tabController.index = await Prefs.getInt("tabIdx");
 
@@ -43,12 +44,19 @@ class _HomePageState extends State<HomePage>
           tabs: [
             Tab(
               text: "Clássicos",
+              icon: Icon(Icons.directions_car),
             ),
             Tab(
               text: "Esportivos",
+              icon: Icon(Icons.directions_car),
             ),
             Tab(
               text: "Luxo",
+              icon: Icon(Icons.directions_car),
+            ),
+            Tab(
+              text: "Favoritos",
+              icon: Icon(Icons.favorite),
             )
           ],
         ),
@@ -59,6 +67,7 @@ class _HomePageState extends State<HomePage>
           CarrosPage(TipoCarro.classicos),
           CarrosPage(TipoCarro.esportivos),
           CarrosPage(TipoCarro.luxo),
+          FavoritosPage(),
         ],
       ),
       drawer: DrawerList(),
