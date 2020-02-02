@@ -115,7 +115,7 @@ class _CarroFormPageState extends State<CarroFormPage> {
   }
 
   _headerFoto() {
-    return carro != null
+    return carro != null && carro.urlFoto != null
         ? CachedNetworkImage(
             imageUrl: carro.urlFoto,
           )
